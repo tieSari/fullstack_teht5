@@ -1,5 +1,6 @@
 import React from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -69,6 +70,9 @@ class App extends React.Component {
     }, 5000)
   }
 }
+//  blogAdded = (newBlog) => {
+//   this.setState({blogs: this.state.blogs.concat(newBlog)})
+// }
 
   handleBlogChange = (event) => {
     this.setState({ newBlog: event.target.value })
@@ -87,7 +91,7 @@ class App extends React.Component {
   }
 
 
-       // <Notification message={this.state.error} />
+       // 
 
         // <h2>Luo uusi blogi</h2>
 
@@ -100,11 +104,21 @@ class App extends React.Component {
         // </form>
 
   render() {
+            const style = {
+      color: 'red',
+  background: 'lightgrey',
+  'font-size': 20,
+  'border-style': 'solid',
+  'border-radius': 5,
+  padding: 10,
+  'margin-bottom': 10
+            }
+
     if (this.state.user === null) {
     return (
       <div>
         <h1>Blogs</h1>
-
+    <Notification message={this.state.error} style={style} />
 
         <h2>Kirjaudu</h2>
 

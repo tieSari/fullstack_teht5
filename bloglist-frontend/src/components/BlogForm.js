@@ -1,5 +1,6 @@
 import React from 'react'
 import blogService from '../services/blogs'
+import Notification from '../components/Notification'
 
 class BlogForm extends React.Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class BlogForm extends React.Component {
       newBlog: '',
       title: '',
       author: '',
-      url: ''
+      url: '',
+      error: null
     }
   }
 
@@ -29,17 +31,30 @@ addBlog = (event) => {
       .create(blogObject)
       .then(newBlog => {
         this.setState({
-          newBlog: ''
-        })
+          newBlog: '',
+          error: `käyttäjä ${this.state.author} luonut blogin ${this.state.title}`,
+    })
+    setTimeout(() => {
+      this.setState({ error: null })
+    }, 5000)
       })
   }
 
   render() {
+    const style = {
+      color: 'green',
+    background: 'lightgrey',
+  'font-size': 20,
+  'border-style': 'solid',
+  'border-radius': 5,
+  padding: 10,
+  'margin-bottom': 10
+}
       return (
       <div>
 
         <h2>Luo uusi blogi</h2>
-
+ <Notification message={this.state.error} style={style}/>
          <form onSubmit={this.addBlog}>
   <div>
     title
