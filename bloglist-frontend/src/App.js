@@ -16,7 +16,8 @@ class App extends React.Component {
       error: null,
       username: '',
       password: '',
-      user: null
+      user: null,
+      likes:0
     }
   }
 
@@ -75,8 +76,19 @@ class App extends React.Component {
 //   this.setState({blogs: this.state.blogs.concat(newBlog)})
 // }
 
-  handleBlogChange = (event) => {
-    this.setState({ newBlog: event.target.value })
+  handleBlogChange = (blog) => {
+    const currBlog = blog
+    console.log('log' ,blog)
+    const blogObject = {
+      _id: currBlog._id,
+      title: currBlog.title,
+      author: currBlog.author,
+      url: currBlog.url,
+      likes: currBlog.likes + 1,
+      user: currBlog.user
+    }
+
+    blogService.update(blogObject._id, blogObject)
   }
 
   handleLoginFieldChange = (event) => {
@@ -156,7 +168,7 @@ class App extends React.Component {
         </Togglable>
         <h3>user {this.state.user.name} logged in </h3> <button onClick={this.handleSignOut}>LogOut</button>
         {this.state.blogs.map(blog => 
-          <Blog key={blog._id} blog={blog}/>
+          <Blog key={blog._id} blog={blog} handleBlogChange={this.handleBlogChange}/>
         )}
       </div>
     )
